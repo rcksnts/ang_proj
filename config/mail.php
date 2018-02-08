@@ -84,9 +84,9 @@ return [
     |
     */
 
-    'username' => env('diverformmail@gmail.com'),
+    'username' =>('diverformmail@gmail.com'),
 
-    'password' => env('Theuren07'),
+    'password' =>('Theuren07'),
 
     /*
     |--------------------------------------------------------------------------

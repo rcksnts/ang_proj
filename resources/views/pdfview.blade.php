@@ -15,26 +15,24 @@
 </head>
 <html>
 <?php
-$ctr = 1;
+header('Content-type: application/pdf');
 ?>
 
-@foreach($forms as $form)
-   
+@foreach($form as $forms)
 
-        <br>
-        <br>
-        <div style="border-style:solid; background-color: gold; border-width: 1px; display: inline-block;  z-index: -9">
+        <div style="border-style:solid; border-width: 1px; display: inline-block;  z-index: -9">
 
-            {{$form-> firstName}} <br>
-            {{$form-> lastName}} <br>
-            {{$form-> gender}}  <br>
-            {{$form-> ageRange}}    <br>
-            {{$form-> mobileNumber}}    <br>
-            {{$form-> email}}   <br>
-            {{$form-> nationality}} <br>
-            {{$form-> activity}} <br>
-            {{$form-> facebook}} <br>
-            {{$form-> instagram}} <br>
+            {{$forms['firstName']}} <br>
+            {{$forms['lastName']}} <br>
+            {{$forms['gender']}}  <br>
+            {{$forms['ageRange']}}    <br>
+            {{$forms ['mobileNumber']}}    <br>
+            {{$forms['email']}}   <br>
+            {{$forms['nationality']}} <br>
+            {{$forms['activity']}} <br>
+            {{$forms['facebook']}} <br>
+            {{$forms['instagram']}} <br>
+
 
 
         </div>
