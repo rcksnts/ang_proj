@@ -40,40 +40,28 @@ class RegistrationController extends Controller
         $response = array();
         $response['success'] = true;
 
-        $this->htmltopdfview($registrationForm);
-       //return response()->json($registrationForm);
-
-
+        return $this->htmltopdfview($registrationForm);
+        //return response()->json($registrationForm);
     }
+
     public function htmltopdfview(RegistrationForm $forms)
     {
-//        view()->share('form',$forms);
-//        $path = public_path();
-//        $pdf = App::make('dompdf.wrapper');
-//        $pdf->loadView('pdfview');
-//        $content = $pdf->output();
-//        file_put_contents($path . '/pdfs/attachment.pdf', $content);
-//        $email = $forms -> email;
-//
-//        Mail::send('view', array(), function($message) use ($email,$pdf) {
-//            $message
-//                ->from('diverformmail@gmail.com', 'Diver For Mail')
-//                ->to('tanjerwin@gmail.com')
-//                ->attachData($pdf->output(), "attachment.pdf")
-//                ->subject('PDF');
-//        });
-//
-//        return view('pdfview')->with('form', $forms);
-        if(!empty($forms))
-        {
+        view()->share('form', $forms);
+        $path = public_path();
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdfview');
+        $content = $pdf->output();
+        file_put_contents($path . '/pdfs/attachment.pdf', $content);
+        $email = $forms->email;
 
-                return $forms;
+        Mail::send('view', array(), function ($message) use ($email, $pdf) {
+            $message
+                ->from('diverformmail@gmail.com', 'Diver For Mail')
+                ->to('tanjerwin@gmail.com')
+                ->attachData($pdf->output(), "/pdfs/attachment.pdf")
+                ->subject('PDF');
+        });
 
-        }
-        else
-        {
-            echo 'asdhjask';
-        }
-
+        return view('pdfview')->with('form', $forms);
     }
 }
