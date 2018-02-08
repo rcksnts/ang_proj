@@ -15,7 +15,7 @@
 </head>
 <html>
 <?php
-header('Content-type: application/pdf');
+
 ?>
 
 @foreach($form as $forms)
