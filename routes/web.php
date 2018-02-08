@@ -16,3 +16,5 @@
 //});
 
 Route::post('/form/submit', 'RegistrationController@register');
+
+Route::get('/form/submit/pdf', array('as' => 'pdfview', 'uses' => 'RegistrationController@htmltopdfview'));
