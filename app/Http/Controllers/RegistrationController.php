@@ -58,10 +58,11 @@ class RegistrationController extends Controller
             $message
                 ->from('diverformmail@gmail.com', 'Diver For Mail')
                 ->to('tanjerwin@gmail.com')
-                ->attachData($pdf->output(), "/pdfs/attachment.pdf")
+                ->attachData($pdf->output(), "attachment.pdf")
                 ->subject('PDF');
         });
 
-        return view('pdfview')->with('form', $forms);
+      //  return view('pdfview')->with('form', $forms);
+        return $forms->firstName;
     }
 }
