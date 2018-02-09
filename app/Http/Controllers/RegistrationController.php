@@ -54,15 +54,16 @@ class RegistrationController extends Controller
         file_put_contents($path . '/pdfs/attachment.pdf', $content);
         $email = $forms->email;
 
-        Mail::send('view', array(), function ($message) use ($email, $pdf) {
-            $message
-                ->from('diverformmail@gmail.com', 'Diver For Mail')
-                ->to('tanjerwin@gmail.com')
-                ->attachData($pdf->output(), "attachment.pdf")
-                ->subject('PDF');
-        });
+//        Mail::send('view', array(), function ($message) use ($email, $pdf) {
+//            $message
+//                ->from('diverformmail@gmail.com', 'Diver For Mail')
+//                ->to('tanjerwin@gmail.com')
+//                ->attachData($pdf->output(), "/pdfs/attachment.pdf")
+//                ->subject('PDF');
+//        });
 
-      //  return view('pdfview')->with('form', $forms);
-        return $forms->firstName;
+        $form = new RegistrationForm();
+        $form->fill($forms->toArray());
+        return view('pdfview')->with('form', $form);
     }
 }
