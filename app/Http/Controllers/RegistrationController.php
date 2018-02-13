@@ -30,40 +30,42 @@ class RegistrationController extends Controller
         $path = public_path();
 
         $img_base64 = $registrationFormTwo->signatureString;
-        file_put_contents($path . '/signatures/' . uniqid() . '.png', base64_decode($img_base64));
+        file_put_contents($path . '/signatures/1.png', base64_decode($img_base64));
 
         $img_base64 = $registrationFormThree->signatureString;
-        file_put_contents($path . '/signatures/' . uniqid() . '.png', base64_decode($img_base64));
+        file_put_contents($path . '/signatures/2.png', base64_decode($img_base64));
 
         File::put(public_path() . '/log.txt', json_encode($request->all()));
 
         $response = array();
         $response['success'] = true;
 
-        return $this->htmltopdfview($registrationForm);
-        //return response()->json($registrationForm);
+        $this->htmltopdfview($registrationForm);
+        return response()->json($registrationForm);
     }
 
     public function htmltopdfview(RegistrationForm $forms)
     {
         view()->share('form', $forms);
-        $path = public_path();
+
+        $path = public_path() . '/pdfs/attachment.pdf';
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView('pdfview');
         $content = $pdf->output();
-        file_put_contents($path . '/pdfs/attachment.pdf', $content);
+        file_put_contents($path, $content);
         $email = $forms->email;
 
-//        Mail::send('view', array(), function ($message) use ($email, $pdf) {
-//            $message
-//                ->from('diverformmail@gmail.com', 'Diver For Mail')
-//                ->to('tanjerwin@gmail.com')
-//                ->attachData($pdf->output(), "/pdfs/attachment.pdf")
-//                ->subject('PDF');
-//        });
+        Mail::send('view', array(), function ($message) use ($email, $content) {
+            $message
+                ->from('diverformmail@gmail.com', 'Diver For Mail')
+                ->to($email)
+                ->attachData($content,'pdf-report.pdf')
+                ->subject("PDF");
+
+        });
 
         $form = new RegistrationForm();
         $form->fill($forms->toArray());
-        return view('pdfview')->with('form', $form);
+        return view('pdfview')->with('form', $forms);
     }
 }
